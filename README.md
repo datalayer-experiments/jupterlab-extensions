@@ -32,8 +32,6 @@ make logs
 
 ## Notebook Extensions Backwards Compatibility
 
-> This needs to be checked (not working with this Dockerfile...)
-
 ![server extension example](./img/server-extension.png)
 
 ## Build the Docker Image

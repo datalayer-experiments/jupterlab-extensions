@@ -77,4 +77,7 @@ RUN jupyter labextension list
 #    fix-permissions $CONDA_DIR && \
 #    fix-permissions /home/$NB_USER
 
+RUN mkdir -p /opt/conda/etc/jupyter/jupyter_server_config.d/
+RUN cp /opt/conda/jupyter-config/jupyter/jupyter_server_config.d/nbclassic.json /opt/conda/etc/jupyter/jupyter_server_config.d/
+
 USER $NB_UID
