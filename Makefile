@@ -11,10 +11,6 @@ default: help ## default target is help
 build: ## build the Docker image
 	docker build -t datalayer/jlab3-on-jserver .
 
-push: ## push the image.
-	@exec docker push \
-	    datalayer/jlab3-on-jserver:latest
-
 start: ## start JupyerLab on port 8888
 	docker run \
       --name ${CONTAINER_NAME} \
