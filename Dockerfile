@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     nano \
     && rm -rf /var/lib/apt/lists/*
 
-# Remove JupyterLab
+# Remove JupyterLab.
 RUN conda remove --quiet --yes \
     'jupyterlab' && \
     conda clean -tipsy && \
@@ -27,36 +27,26 @@ RUN conda remove --quiet --yes \
     fix-permissions /home/$NB_USER
 
 # Clone and Install Jupyter Server.
-# TODO Latest commmits fail the server to start, so we use for now 3b09860 commit
 RUN cd && \
-    git clone https://github.com/Zsailer/jupyter_server.git --branch extension-loading && \
+    git clone https://github.com/jupyter/jupyter_server.git --branch master --depth 1 && \
     cd jupyter_server && \
-    git checkout 3b09860 && \
     pip install -e .
 
 # Clone and Install NBClassic.
 RUN cd && \
-    git clone https://github.com/Zsailer/nbclassic.git --branch master --depth 1 && \
+    git clone https://github.com/ZSailer/nbclassic.git --branch master --depth 1 && \
     cd nbclassic && \
     pip install -e .
 
-# TODO Fix the installation of nbclassic.json
-# 1. With pip install -e ., nbclassic.json is put in /opt/conda/jupyter-config/jupyter/jupyter_server_config.d/nbclassic.json 
-# which is not where it should be (afaik it should be in /opt/conda/etc/jupyter/jupyter_server_config.d/)
-# 2. With pip install ., nbclassic python package is not found by jupyterlab.
-RUN mkdir -p /opt/conda/etc/jupyter/jupyter_server_config.d/
-RUN cd && \
-  cp nbclassic/jupyter-config/jupyter/jupyter_server_config.d/nbclassic.json /opt/conda/etc/jupyter/jupyter_server_config.d/
-
 # Clone and Install JupyterLab Server.
 RUN cd && \
-    git clone https://github.com/datalayer-contrib/jupyterlab-server.git --branch jupyter_server --depth 1 && \
-    cd jupyterlab-server && \
+    git clone https://github.com/jupyterlab/jupyterlab_server.git --branch master --depth 1 && \
+    cd jupyterlab_server && \
     pip install -e .
 
 # Clone and Install JupyterLab.
 RUN cd && \
-    git clone https://github.com/datalayer-contrib/jupyterlab.git --branch jupyter_server --depth 1 && \
+    git clone https://github.com/jupyterlab/jupyterlab.git --branch master --depth 1 && \
     cd jupyterlab && \
     pip install -e .
 
