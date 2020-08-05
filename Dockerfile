@@ -26,16 +26,10 @@ RUN conda remove --quiet --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# Clone and Install Jupyter Server.
+# Clone and Install JupyterLab.
 RUN cd && \
-    git clone https://github.com/jupyter/jupyter_server.git --branch master --depth 1 && \
-    cd jupyter_server && \
-    pip install -e .
-
-# Clone and Install NBClassic.
-RUN cd && \
-    git clone https://github.com/ZSailer/nbclassic.git --branch master --depth 1 && \
-    cd nbclassic && \
+    git clone https://github.com/jupyterlab/jupyterlab.git --branch master --depth 1 && \
+    cd jupyterlab && \
     pip install -e .
 
 # Clone and Install JupyterLab Server.
@@ -44,10 +38,16 @@ RUN cd && \
     cd jupyterlab_server && \
     pip install -e .
 
-# Clone and Install JupyterLab.
+# Clone and Install NBClassic.
 RUN cd && \
-    git clone https://github.com/jupyterlab/jupyterlab.git --branch master --depth 1 && \
-    cd jupyterlab && \
+    git clone https://github.com/ZSailer/nbclassic.git --branch master --depth 1 && \
+    cd nbclassic && \
+    pip install -e .
+
+# Clone and Install Jupyter Server.
+RUN cd && \
+    git clone https://github.com/jupyter/jupyter_server.git --branch master --depth 1 && \
+    cd jupyter_server && \
     pip install -e .
 
 # Install JupyterLab Server Example extension.
