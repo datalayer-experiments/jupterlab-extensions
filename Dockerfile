@@ -1,11 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-ARG BASE_CONTAINER=jupyter/minimal-notebook:b90cce83f37b
+ARG BASE_CONTAINER=jupyter/minimal-notebook:399cbb986c6b
 
 FROM $BASE_CONTAINER
 
-LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+LABEL maintainer="Eric Charles"
 
 USER root
 
@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     build-essential \
     git \
     nano \
+    pkg-config \
+    libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg8-dev libgif-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Remove JupyterLab.
@@ -32,30 +34,36 @@ RUN cd && \
     cd jupyterlab && \
     pip install -e .
 
-# Clone and Install JupyterLab Server.
-RUN cd && \
-    git clone https://github.com/jupyterlab/jupyterlab_server.git --branch master --depth 1 && \
-    cd jupyterlab_server && \
-    pip install -e .
-
-# Clone and Install NBClassic.
-RUN cd && \
-    git clone https://github.com/ZSailer/nbclassic.git --branch master --depth 1 && \
-    cd nbclassic && \
-    pip install -e .
-
-# Clone and Install Jupyter Server.
-RUN cd && \
-    git clone https://github.com/jupyter/jupyter_server.git --branch master --depth 1 && \
-    cd jupyter_server && \
-    pip install -e .
-
 # Install JupyterLab Server Example extension.
 RUN cd && \
-   git clone https://github.com/datalayer-contrib/jupyterlab-extension-examples.git --branch jupyter_server --depth 1 && \
+   git clone https://github.com/jupyterlab/jupyterlab-extension-examples.git --branch 3.0 --depth 1 && \
    cd jupyterlab-extension-examples/advanced/server-extension && \
    pip install -e . && \
    jupyter serverextension enable --py jlab_ext_example && \
+   jlpm && \
+   jlpm build && \
+   jupyter labextension link .
+
+# https://github.com/voila-dashboards/voila/pull/732
+RUN cd && \
+   git clone https://github.com/jtpio/voila.git --branch preview-lab3 --depth 1 && \
+   cd voila/packages/jupyterlab-voila && \
+   jlpm && \
+   jlpm build && \
+   jupyter labextension link .
+
+# https://github.com/jupyter/nbdime/pull/551
+RUN cd && \
+   git clone https://github.com/ajbozarth/nbdime.git --branch lab3 --depth 1 && \
+   cd voila/packages/jupyterlab-voila && \
+   jlpm && \
+   jlpm build && \
+   jupyter labextension link .
+
+# https://github.com/jupyterlab/jupyterlab-git/pull/818
+RUN cd && \
+   git clone https://github.com/ajbozarth/jupyterlab-git.git --branch lab3 --depth 1 && \
+   cd voila/packages/jupyterlab-voila && \
    jlpm && \
    jlpm build && \
    jupyter labextension link .

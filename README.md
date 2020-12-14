@@ -1,38 +1,15 @@
-# JupyterLab on Jupyter Server
+# JupyterLab 3 Extensions
 
 This repository contains a Docker based demo of `JupyterLab` running on `Jupyter Server`:
 
 - JupyterLab is now a [Jupyter Server extension](https://jupyter-server.readthedocs.io/en/latest/developers/extensions.html).
-- [NbClassic](https://github.com/Zsailer/nbclassic/) provides a shim for configuration and generates warning for deprecated NotebookApp configuration usage.
-- [NbClassic](https://github.com/Zsailer/nbclassic/) ensures backwards compatibility of existings notebook server extensions.
+- [NbClassic](https://github.com/Zsailer/nbclassic) provides a shim for configuration and generates warning for deprecated NotebookApp configuration usage and ensures backwards compatibility of existings notebook server extensions.
 
-Read this [HackMD](https://hackmd.io/JGAXtXw-Re-BFlNVv8fozg) written by @ZSailer for a more detailed status of this work.
+JupyterLab is built from source and we add the following extensions:
 
-```bash
-# Use it with Docker.
-make start
-open http://localhost:8888
-```
-
-```bash
-# Stop and remove the Docker container.
-make stop
-make rm
-```
-
-## NbClassic Shim
-
-```bash
-# Inspect the logs in another terminal.
-make logs
-# You can see warning created by nbclassic for the deprecated configuration like:
-# [LabApp] WARNING | 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-# [LabApp] WARNING | 'password' has moved from LabApp to ServerApp. Be sure to update your config before our next release.
-```
-
-## Notebook Extensions Backwards Compatibility
-
-![server extension example](./img/server-extension.png)
+- jupyterlab extension example https://github.com/jupyterlab/extension-examples/blob/3.0/advanced/server-extension/README.md
+- jupyterlab git https://github.com/jupyter/nbdime/pull/551 + https://github.com/jupyterlab/jupyterlab-git/pull/818
+- jupyterlab voila https://github.com/voila-dashboards/voila/pull/732
 
 ## Build the Docker Image
 
@@ -74,3 +51,31 @@ Known labextensions:
 Removing intermediate container 0dd77b1e5669
  ---> 216397488a21
 ```
+
+## Start
+
+```bash
+# Use it with Docker.
+make start
+open http://localhost:8888
+```
+
+```bash
+# Stop and remove the Docker container.
+make stop
+make rm
+```
+
+## NbClassic Shim
+
+```bash
+# Inspect the logs in another terminal.
+make logs
+# You can see warning created by nbclassic for the deprecated configuration like:
+# [LabApp] WARNING | 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+# [LabApp] WARNING | 'password' has moved from LabApp to ServerApp. Be sure to update your config before our next release.
+```
+
+## Notebook Extensions Backwards Compatibility
+
+![server extension example](./img/server-extension.png)
