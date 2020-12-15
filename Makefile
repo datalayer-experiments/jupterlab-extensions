@@ -9,7 +9,7 @@ help: ## display this help
 default: help ## default target is help
 
 build: ## build the Docker image
-	docker build -t datalayer/jupyterlab3-extensions .
+	docker build --progress plain -t datalayer/jupyterlab3-extensions .
 
 start: ## start JupyerLab on port 8888
 	docker run \
