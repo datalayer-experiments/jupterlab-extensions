@@ -1,6 +1,3 @@
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Modified BSD License.
-
 ARG BASE_CONTAINER=jupyter/minimal-notebook:399cbb986c6b
 FROM $BASE_CONTAINER
 
@@ -44,7 +41,8 @@ RUN cd && \
 RUN cd nbdime && \
   yarn && \
   yarn build && \
-  pip install -e .
+  pip install -e . && \
+  jupyter serverextension enable --py nbdime
 #   jupyter labextension link . --no-build
 
 # RUN jupyter labextension install @datalayer-jupyter/jupyterlab-nbdime@3.0.0 --no-build
